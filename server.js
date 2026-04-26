@@ -2,12 +2,16 @@ const express = require('express');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const csrf = require('csurf');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(csrf({ cookie: true }));
 
-// Vulnerability 1: Hardcoded JWT secret
-const JWT_SECRET = 'my-secret-key-123';
+// Use environment variable for JWT secret
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-change-me';
 
 // Database connection
 const db = mysql.createConnection({
