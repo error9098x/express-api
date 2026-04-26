@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'my-secret-key-123';
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-change-me';
 
 function authenticateToken(req, res, next) {
   const token = req.headers['authorization'];
